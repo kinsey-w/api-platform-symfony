@@ -11,7 +11,7 @@ Ce projet est une **API REST complète** réalisée avec **Symfony** et **API Pl
 ### 1️. Cloner le projet
 
 ```bash
-git clone <repo>
+git clone https://github.com/kinsey-w/api-platform-symfony.git
 cd movies-api
 ```
 
