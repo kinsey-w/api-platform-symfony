@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Movies{% endblock %}
+
+{% block body %}
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Movies</h1>
+            <p class="page-subtitle">Browse the catalog of movies from the API Platform backend.</p>
+        </div>
+        <div class="page-actions">
+            {# Placeholder for future filters / search #}
+            {# <input type="search" class="search-input" placeholder="Search by title…"> #}
+        </div>
+    </div>
+
+    <div class="movies-grid">
+        {% for movie in movies %}
+            <article class="movie-card">
+                <a href="{{ path('movie_show', { id: movie.id }) }}" class="movie-card__image-link">
+                    {% if movie.poster %}
+                        <img src="/uploads/{{ movie.poster.filePath }}" alt="{{ movie.title }}" class="movie-card__image">
+                    {% else %}
+                        <img src="https://placehold.co/300x450?text=No+Image" alt="No poster" class="movie-card__image">
+                    {% endif %}
+                </a>
+
+                <div class="movie-card__body">
+                    <h3 class="movie-card__title">
+                        <a href="{{ path('movie_show', { id: movie.id }) }}">{{ movie.title }}</a>
+                    </h3>
+
+                    <div class="movie-card__meta">
+                        {% if movie.releaseDate %}
+                            <span class="movie-card__year">{{ movie.releaseDate|date('Y') }}</span>
+                        {% endif %}
+
+                        {% if movie.category %}
+                            <span class="movie-card__category">{{ movie.category.name }}</span>
+                        {% endif %}
+
+                        {% if movie.rating %}
+                            <span class="movie-card__rating">★ {{ movie.rating|number_format(1) }}</span>
+                        {% endif %}
+                    </div>
+
+                    {% if movie.synopsis %}
+                        <p class="movie-card__synopsis">
+                            {{ movie.synopsis|u.truncate(110, '…') }}
+                        </p>
+                    {% endif %}
+                </div>
+            </article>
+        {% else %}
+            <p>No movies found yet.</p>
+        {% endfor %}
+    </div>
+{% endblock %}
